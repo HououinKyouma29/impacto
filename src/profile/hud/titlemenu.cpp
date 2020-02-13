@@ -4,6 +4,7 @@
 #include "../games/rne/titlemenu.h"
 #include "../games/dash/titlemenu.h"
 #include "../games/chlcc/titlemenu.h"
+#include "../games/mo6tw/titlemenu.h"
 #include "../../log.h"
 #include "../../window.h"
 
@@ -35,7 +36,9 @@ void Configure() {
       Implementation = Dash::TitleMenu::Configure();
     } else if (Type == +TitleMenuType::CHLCC) {
       Implementation = CHLCC::TitleMenu::Configure();
-    }
+    } else if (Type == +TitleMenuType::MO6TW) {
+      Implementation = MO6TW::TitleMenu::Configure();
+    } 
 
     PressToStartSprite = EnsureGetMemberSprite("PressToStartSprite");
 

@@ -7,6 +7,8 @@ namespace Profile {
 namespace RNE {
 namespace MainMenu {
 
+Sprite ButtonBackgroundSprite;
+Sprite ButtonPromptsSprite;
 Sprite SkyBackgroundSprite;
 Sprite SkyArrowSprite;
 Sprite SkyTextSprite;
@@ -24,6 +26,11 @@ float EntriesMoveDurationIn;
 float EntriesMoveDurationOut;
 float HighlightDurationIn;
 float HighlightDurationOut;
+float ButtonBackgroundStartX;
+float ButtonBackgroundX;
+float ButtonBackgroundY;
+float ButtonBackgroundTargetWidth;
+float ButtonBackgroundSprStartX;
 
 Impacto::MainMenu::MainMenuBase* Configure() {
   Impacto::RNE::MainMenu* result = new Impacto::RNE::MainMenu();
@@ -32,6 +39,8 @@ Impacto::MainMenu::MainMenuBase* Configure() {
   result->BackgroundAnimation = RNE::ParseTileBackground();
   Pop();
 
+  ButtonBackgroundSprite = EnsureGetMemberSprite("ButtonBackgroundSprite");
+  ButtonPromptsSprite = EnsureGetMemberSprite("ButtonPromptsSprite");
   SkyBackgroundSprite = EnsureGetMemberSprite("SkyBackgroundSprite");
   SkyArrowSprite = EnsureGetMemberSprite("SkyArrowSprite");
   SkyTextSprite = EnsureGetMemberSprite("SkyTextSprite");
@@ -49,6 +58,13 @@ Impacto::MainMenu::MainMenuBase* Configure() {
   EntriesMoveDurationOut = EnsureGetMemberFloat("EntriesMoveDurationOut");
   HighlightDurationIn = EnsureGetMemberFloat("HighlightDurationIn");
   HighlightDurationOut = EnsureGetMemberFloat("HighlightDurationOut");
+  ButtonBackgroundStartX = EnsureGetMemberFloat("ButtonBackgroundStartX");
+  ButtonBackgroundX = EnsureGetMemberFloat("ButtonBackgroundX");
+  ButtonBackgroundY = EnsureGetMemberFloat("ButtonBackgroundY");
+  ButtonBackgroundTargetWidth =
+      EnsureGetMemberFloat("ButtonBackgroundTargetWdith");
+  ButtonBackgroundSprStartX =
+      EnsureGetMemberFloat("ButtonBackgroundSprStartX");
 
   result->SkyMoveAnimation.DurationIn = SkyMoveDurationIn;
   result->SkyMoveAnimation.DurationOut = SkyMoveDurationOut;

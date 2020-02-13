@@ -51,16 +51,19 @@ set(Impacto_Src
     src/profile/hud/sysmesbox.cpp
     src/profile/hud/selectiondisplay.cpp
 
-    src/profile/games/rne/tilebackground.cpp
     src/profile/games/rne/mainmenu.cpp
+    src/profile/games/rne/tilebackground.cpp
     src/profile/games/rne/titlemenu.cpp
     src/profile/games/rne/sysmesbox.cpp
+    
 
     src/profile/games/dash/titlemenu.cpp
 
     src/profile/games/chlcc/titlemenu.cpp
     src/profile/games/chlcc/sysmesbox.cpp
 
+    src/profile/games/mo6tw/mainmenu.cpp
+    src/profile/games/mo6tw/titlemenu.cpp
     src/profile/games/mo6tw/sysmesbox.cpp
 
     src/profile/games/darling/sysmesbox.cpp
@@ -77,8 +80,10 @@ set(Impacto_Src
     src/games/chlcc/sysmesbox.cpp
     src/games/chlcc/savesystem.cpp
 
-	src/games/mo6tw/sysmesbox.cpp
-
+    src/games/mo6tw/mainmenu.cpp
+    src/games/mo6tw/titlemenu.cpp
+    src/games/mo6tw/sysmesbox.cpp
+    
 	src/games/darling/sysmesbox.cpp
 
     src/hud/datedisplay.cpp
@@ -121,7 +126,6 @@ set(Impacto_Src
     src/texture/gxtloader.cpp
     src/texture/plainloader.cpp
     src/texture/stbiloader.cpp
-    src/texture/ddsloader.cpp
 
     src/vm/vm.cpp
     src/vm/expression.cpp
@@ -155,16 +159,6 @@ set(Impacto_Src
     vendor/duktape/src/duktape.c
 
     vendor/pcg/src/pcg_basic.c
-    
-    vendor/squish/alpha.cpp 
-    vendor/squish/clusterfit.cpp
-    vendor/squish/colourblock.cpp 
-    vendor/squish/colourfit.cpp 
-    vendor/squish/colourset.cpp
-    vendor/squish/maths.cpp 
-    vendor/squish/rangefit.cpp 
-    vendor/squish/singlecolourfit.cpp
-    vendor/squish/squish.cpp
 )
 
 set(Impacto_Header
@@ -225,7 +219,9 @@ set(Impacto_Header
     src/profile/games/chlcc/titlemenu.h
     src/profile/games/chlcc/sysmesbox.h
 
+    src/profile/games/mo6tw/mainmenu.h
     src/profile/games/mo6tw/sysmesbox.h
+    src/profile/games/mo6tw/titlemenu.h
 
     src/profile/games/darling/sysmesbox.h
 
@@ -242,6 +238,8 @@ set(Impacto_Header
     src/games/chlcc/savesystem.h
 
     src/games/mo6tw/sysmesbox.h
+    src/games/mo6tw/titlemenu.h
+    src/games/mo6tw/mainmenu.h
 
     src/games/darling/sysmesbox.h
 
@@ -312,10 +310,8 @@ set(Impacto_Header
 
     vendor/nuklear/nuklear.h
     vendor/nuklear/nuklear_sdl_gl3.h
-    
+
     vendor/clHCA/clHCA.h
-    
-    vendor/squish/squish.h
 )
 
 if (WIN32)
@@ -330,7 +326,7 @@ if (WIN32)
     # Workaround for RelWithDebInfo builds not installing all the libraries
     set(CMAKE_MAP_IMPORTED_CONFIG_MINSIZEREL Release)
     set(CMAKE_MAP_IMPORTED_CONFIG_RELWITHDEBINFO Release)
-
+    
     set(SDL2_LIBRARIES SDL2::SDL2 SDL2::SDL2main)
     set(LIBATRAC9_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/vendor/LibAtrac9/include")
 

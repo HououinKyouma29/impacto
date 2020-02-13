@@ -9,6 +9,8 @@ namespace Profile {
 namespace RNE {
 namespace MainMenu {
 
+extern Sprite ButtonBackgroundSprite;
+extern Sprite ButtonPromptsSprite;
 extern Sprite SkyBackgroundSprite;
 extern Sprite SkyArrowSprite;
 extern Sprite SkyTextSprite;
@@ -26,6 +28,11 @@ extern float EntriesMoveDurationIn;
 extern float EntriesMoveDurationOut;
 extern float HighlightDurationIn;
 extern float HighlightDurationOut;
+extern float ButtonBackgroundStartX;
+extern float ButtonBackgroundX;
+extern float ButtonBackgroundY;
+extern float ButtonBackgroundTargetWidth;
+extern float ButtonBackgroundSprStartX;
 
 Impacto::MainMenu::MainMenuBase* Configure();
 
