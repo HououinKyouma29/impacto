@@ -18,7 +18,7 @@ int CurrentChoice = 0;
 
 void MainMenu::Show() {
   if (State != Shown) {
-    State = Shown;
+    State = Showing;
   }
 }
 void MainMenu::Hide() {
@@ -32,9 +32,11 @@ void MainMenu::Update(float dt) {
   } else {
     Hide();
   }
-  if (ScrWork[SW_SYSMENUCT] == 100 && State == Shown) {
+  if (ScrWork[SW_SYSMENUALPHA] == 0 && State == Shown) {
     Hide();
   }
+
+  if (ScrWork[SW_SYSMENUALPHA] == 256) State = Shown;
 
   if (State == Shown) {
     if (Input::KeyboardButtonWentDown[SDL_SCANCODE_DOWN])
@@ -42,32 +44,31 @@ void MainMenu::Update(float dt) {
     else if (Input::KeyboardButtonWentDown[SDL_SCANCODE_UP])
       CurrentChoice--;
     if (CurrentChoice < 0)
-      CurrentChoice = 7;
-    else if (CurrentChoice > 7)
+      CurrentChoice = 6;
+    else if (CurrentChoice > 6)
       CurrentChoice = 0;
     ScrWork[SW_SYSMENUCNO] = CurrentChoice;
   }
-
-  MenuEntriesHSprites[CurrentChoice].Bounds.Width =
-      MenuEntriesTargetWidth;
 }
 void MainMenu::Render() {
   if (State != Hidden && ScrWork[SW_SYSMENUALPHA] > 0) {
+    Renderer2D::DrawSprite(MainMenuBackgroundSprite,
+                           glm::vec2(MainMenuX, MainMenuY));
     glm::vec4 black(0.0f);
     for (int i = 0; i < MenuEntriesNum; i++) {
-      black.a = glm::smoothstep(
-          0.0f, 1.0f, 1.0f - (i + 1) * (1.0f));
+      black.a = glm::smoothstep(0.0f, 1.0f, 1.0f - (i + 1) * (1.0f));
       Renderer2D::DrawSprite(
           MenuEntriesSprites[i],
           glm::vec2(MenuEntriesX,
                     MenuEntriesFirstY + (i * MenuEntriesYPadding)));
     }
 
-    Renderer2D::DrawSprite(
-          MenuEntriesHSprites[CurrentChoice],
-          glm::vec2(MenuEntriesX,
+    for (int i = 0; i < 3; i++) {
+      Renderer2D::DrawSprite(
+          MenuEntriesHighlightedSprite,
+          glm::vec2(MenuEntriesX + i * 76 + 17,
                     MenuEntriesFirstY + (CurrentChoice * MenuEntriesYPadding)));
-    
+    }
   }
 }
 

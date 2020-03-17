@@ -1,17 +1,39 @@
 #include "mainmenu.h"
 #include "../../profile_internal.h"
 #include "tilebackground.h"
+#include "../../../log.h"
+#include "../../../window.h"
 
 namespace Impacto {
 namespace Profile {
 namespace RNE {
 namespace MainMenu {
 
+static void GetMemberSpriteArray(Sprite* arr, uint32_t count,
+                                 char const* name) {
+  EnsurePushMemberOfType(name, kArrayType);
+
+  if (TopVal().Size() != count) {
+    ImpLog(LL_Fatal, LC_Profile, "Expected to have %d sprites for %s\n", count,
+           name);
+    Window::Shutdown();
+  }
+
+  for (uint32_t i = 0; i < count; i++) {
+    arr[i] = EnsureGetArrayElementSprite(i);
+  }
+
+  Pop();
+}
+
 Sprite ButtonBackgroundSprite;
 Sprite ButtonPromptsSprite;
 Sprite SkyBackgroundSprite;
 Sprite SkyArrowSprite;
 Sprite SkyTextSprite;
+Sprite MenuEntriesHSprites[MenuEntriesNum];
+Sprite MenuEntriesSprites[MenuEntriesNum];
+
 float SkyBackgroundBeginX;
 float SkyBackgroundY;
 float SkyTextBeginX;
@@ -63,8 +85,11 @@ Impacto::MainMenu::MainMenuBase* Configure() {
   ButtonBackgroundY = EnsureGetMemberFloat("ButtonBackgroundY");
   ButtonBackgroundTargetWidth =
       EnsureGetMemberFloat("ButtonBackgroundTargetWdith");
-  ButtonBackgroundSprStartX =
-      EnsureGetMemberFloat("ButtonBackgroundSprStartX");
+  ButtonBackgroundSprStartX = EnsureGetMemberFloat("ButtonBackgroundSprStartX");
+  GetMemberSpriteArray(MenuEntriesHSprites, MenuEntriesNum,
+                       "MenuEntriesHighlightedSprites");
+  GetMemberSpriteArray(MenuEntriesSprites, MenuEntriesNum,
+                       "MenuEntriesSprites");
 
   result->SkyMoveAnimation.DurationIn = SkyMoveDurationIn;
   result->SkyMoveAnimation.DurationOut = SkyMoveDurationOut;

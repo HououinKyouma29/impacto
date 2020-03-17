@@ -14,29 +14,10 @@ using namespace Impacto::MainMenu;
 
 MainMenuType Type = MainMenuType::None;
 
-Sprite MenuEntriesSprites[MenuEntriesNum];
-Sprite MenuEntriesHSprites[MenuEntriesNum];
 float MenuEntriesX;
 float MenuEntriesXOffset;
 float MenuEntriesFirstY;
 float MenuEntriesYPadding;
-
-static void GetMemberSpriteArray(Sprite* arr, uint32_t count,
-                                 char const* name) {
-  EnsurePushMemberOfType(name, kArrayType);
-
-  if (TopVal().Size() != count) {
-    ImpLog(LL_Fatal, LC_Profile, "Expected to have %d sprites for %s\n", count,
-           name);
-    Window::Shutdown();
-  }
-
-  for (uint32_t i = 0; i < count; i++) {
-    arr[i] = EnsureGetArrayElementSprite(i);
-  }
-
-  Pop();
-}
 
 void Configure() {
   if (TryPushMember("MainMenu")) {
@@ -49,16 +30,12 @@ void Configure() {
     } else if (Type == +MainMenuType::MO6TW) {
       Implementation = MO6TW::MainMenu::Configure();
     }
-      
+
     MenuEntriesX = EnsureGetMemberFloat("MenuEntriesX");
     MenuEntriesXOffset = EnsureGetMemberFloat("MenuEntriesXOffset");
     MenuEntriesFirstY = EnsureGetMemberFloat("MenuEntriesFirstY");
     MenuEntriesYPadding = EnsureGetMemberFloat("MenuEntriesYPadding");
 
-    GetMemberSpriteArray(MenuEntriesSprites, MenuEntriesNum,
-                         "MenuEntriesSprites");
-    GetMemberSpriteArray(MenuEntriesHSprites, MenuEntriesNum,
-                         "MenuEntriesHighlightedSprites");
     Pop();
   }
 }

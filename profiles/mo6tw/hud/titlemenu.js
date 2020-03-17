@@ -11,8 +11,48 @@ root.TitleMenu = {
     CopyrightX:468,
     CopyrightY: 663,
     LogoX: 342,
-    LogoY: 32
+    LogoY: 32,
+    MenuBackgroundSprite: "MenuBackground",
+    MenuEntriesSprites: [],
+    MenuEntriesHighlightedSprites: [],
+    MenuEntriesX: 581,
+    MenuEntriesXOffset: 100,
+    MenuEntriesFirstY: 220,
+    MenuEntriesYPadding: 50,
+    MenuEntriesTargetWidth: 142
 };
+
+for (var i = 0; i < 7; i++) {
+    root.Sprites["MenuEntry" + i] = {
+        Sheet: "Title",
+        Bounds: {
+            X: 697,
+            Y: 3 + i * 32,
+            Width: root.TitleMenu.MenuEntriesTargetWidth,
+            Height: 27
+        }
+    };
+    root.TitleMenu.MenuEntriesSprites.push("MenuEntry" + i);
+}
+
+for (var i = 0; i < 7; i++) {
+    root.Sprites["MenuEntryHighlighted" + i] = {
+        Sheet: "Title",
+        Bounds: {
+            X: 952,
+            Y: 2 + i * 32,
+            Width: root.TitleMenu.MenuEntriesTargetWidth,
+            Height: 27
+        }
+    };
+    root.TitleMenu.MenuEntriesHighlightedSprites.push("MenuEntryHighlighted" + i);
+}
+
+root.Sprites["MenuBackground"] = {
+    Sheet: "MainBg",
+    Bounds: { X: 0, Y: 0, Width: 1280, Height: 720 }
+};
+
 
 root.Sprites["TitleMenuBackground"] = {
     Sheet: "Titlebg",

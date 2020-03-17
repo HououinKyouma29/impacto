@@ -9,11 +9,16 @@ namespace Profile {
 namespace RNE {
 namespace MainMenu {
 
+static int const MenuEntriesNum = 8;
+
 extern Sprite ButtonBackgroundSprite;
 extern Sprite ButtonPromptsSprite;
 extern Sprite SkyBackgroundSprite;
 extern Sprite SkyArrowSprite;
 extern Sprite SkyTextSprite;
+extern Sprite MenuEntriesHSprites[MenuEntriesNum];
+extern Sprite MenuEntriesSprites[MenuEntriesNum];
+
 extern float SkyBackgroundBeginX;
 extern float SkyBackgroundY;
 extern float SkyTextBeginX;

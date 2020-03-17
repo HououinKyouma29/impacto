@@ -18,6 +18,8 @@ using namespace Impacto::Profile::TitleMenu;
 using namespace Impacto::Profile::MO6TW::TitleMenu;
 using namespace Impacto::Profile::ScriptVars;
 
+int SecondaryChoiceCount = 0;
+
 void TitleMenu::Show() {
   if (State != Shown) {
     State = Shown;
@@ -40,18 +42,65 @@ void TitleMenu::Update(float dt) {
     if (PressToStartAnimation.State == AS_Stopped)
       PressToStartAnimation.StartIn();
   }
+
+  if (Input::KeyboardButtonWentDown[SDL_SCANCODE_DOWN]) {
+    if (ScrWork[SW_TITLEDISPCT] >= 7) {
+      SecondaryChoice++;
+      if (SecondaryChoice > SecondaryChoiceCount) SecondaryChoice = 0;
+    } else {
+      CurrentChoice++;
+      if (CurrentChoice > 6) CurrentChoice = 0;
+    }
+  } else if (Input::KeyboardButtonWentDown[SDL_SCANCODE_UP]) {
+    if (ScrWork[SW_TITLEDISPCT] >= 7) {
+      SecondaryChoice--;
+      if (SecondaryChoice < 0) SecondaryChoice = SecondaryChoiceCount;
+    } else {
+      CurrentChoice--;
+      if (CurrentChoice < 0) CurrentChoice = 6;
+    }
+  }
 }
 void TitleMenu::Render() {
   if (State != Hidden && GetFlag(SF_TITLEMODE)) {
-    glm::vec4 col = glm::vec4(1.0f);
-    col.a = glm::smoothstep(0.0f, 1.0f, PressToStartAnimation.Progress);
-    Renderer2D::DrawSprite(BackgroundSprite, glm::vec2(0.0f));
-    Renderer2D::DrawSprite(PressToStartSprite,
-                           glm::vec2(PressToStartX, PressToStartY), col);
-    Renderer2D::DrawSprite(LogoSprite, glm::vec2(LogoX, LogoY));
-    Renderer2D::DrawSprite(CopyrightSprite, glm::vec2(CopyrightX, CopyrightY));
+    int maskAlpha = ScrWork[SW_TITLEMASKALPHA];
+    glm::vec4 col = ScrWorkGetColor(SW_TITLEMASKCOLOR);
+    col.a = glm::min(maskAlpha / 255.0f, 1.0f);
+    Renderer2D::DrawRect(
+        RectF(0.0f, 0.0f, Profile::DesignWidth, Profile::DesignHeight), col);
+
+    if (ScrWork[SW_TITLEDISPCT] == 0)
+      DrawTitleMenuBackGraphics();
+    else
+      DrawTitleMenuItems();
   }
 }
 
-}  // namespace mo6tw
+void TitleMenu::DrawTitleMenuBackGraphics() {
+  glm::vec4 col = glm::vec4(1.0f);
+  col.a = glm::smoothstep(0.0f, 1.0f, PressToStartAnimation.Progress);
+  Renderer2D::DrawSprite(BackgroundSprite, glm::vec2(0.0f));
+  Renderer2D::DrawSprite(LogoSprite, glm::vec2(LogoX, LogoY));
+  Renderer2D::DrawSprite(CopyrightSprite, glm::vec2(CopyrightX, CopyrightY));
+  Renderer2D::DrawSprite(PressToStartSprite,
+                         glm::vec2(PressToStartX, PressToStartY), col);
+}
+
+void TitleMenu::DrawTitleMenuItems() {
+  Renderer2D::DrawSprite(MenuBackgroundSprite, glm::vec2(0.0f));
+  glm::vec4 black(0.0f);
+  for (int i = 0; i < MenuEntriesNum; i++) {
+    black.a = glm::smoothstep(0.0f, 1.0f, 1.0f - (i + 1) * (1.0f));
+    Renderer2D::DrawSprite(
+        MenuEntriesSprites[i],
+        glm::vec2(MenuEntriesX, MenuEntriesFirstY + (i * MenuEntriesYPadding)));
+  }
+
+  Renderer2D::DrawSprite(
+      MenuEntriesHSprites[CurrentChoice],
+      glm::vec2(MenuEntriesX,
+                MenuEntriesFirstY + (CurrentChoice * MenuEntriesYPadding)));
+}
+
+}  // namespace MO6TW
 }  // namespace Impacto
